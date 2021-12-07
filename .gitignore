@@ -10,3 +10,5 @@ src/algo/app.py
 src/algo/demo.py
 src/algo/donate-wechat-code.png
 src/algo/fast_id_photo.py
+.idea
+**DS_Store
