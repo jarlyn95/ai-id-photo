@@ -1,0 +1,11 @@
+active: dev
+env_list: 
+- env: dev
+  redis:
+       host: localhost
+       port: 6379
+- env: test
+- env: prod
+  redis:
+    host: 10.194.188.156
+    port: 6379

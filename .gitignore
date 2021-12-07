@@ -1,1 +1,12 @@
 src/web/node_modules
+src/algo/in_photo
+src/algo/key
+src/algo/out_photo
+src/algo/out_photo2
+**.log
+src/algo/pretrained_model
+**.pyc
+src/algo/app.py
+src/algo/demo.py
+src/algo/donate-wechat-code.png
+src/algo/fast_id_photo.py

@@ -1,0 +1,10 @@
+gunicorn==20.1.0
+flask==2.0.2
+flask_cors==3.0.10
+# Pillow==8.4.0
+PyYAML==6.0
+redis==3.5.3
+opencv-python==4.5.4.58
+# tensorflow-cpu==1.15.0 # 需手动按照 区分gpu版本和cpu版本
+# paddlepaddle==2.2.0 # 需手动按照 区分gpu版本和cpu版本 # pip install paddlepaddle==2.2.0 -i https://mirror.baidu.com/pypi/simple
+# paddlehub==2.1.1 # 需手动安装 区分gpu版本和cpu版本 # pip install paddlehub==2.1.1 -i https://mirror.baidu.com/pypi/simple
