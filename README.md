@@ -7,4 +7,4 @@
 ![效果图](./sln/img/view.png)  
 
 应用到了深度学习框架tensorflow和paddlepaddle， 
-实现方案见[《ai十行代码制作证件照》](./sln/docs/ai十行代码制作证件照.md)。
+实现方案见[《ai十行代码制作证件照》](./sln/docs/README.md)。
