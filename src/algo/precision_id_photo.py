@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 import logging
-
-# from face_recognition import face_locations
 import numpy as np
 from PIL import Image
 
 import tarfile
 import tensorflow as tf
 import cv2 as cv
-from utils import create_bgr_bg
 import os
 import paddlehub as hub
 
@@ -16,7 +13,9 @@ face_landmark = hub.Module(name="face_landmark_localization")
 
 
 class DeepLabModel(object):
-    """Class to load deeplab model and run inference."""
+    """
+    Class to load deeplab model and run inference.
+    """
 
     INPUT_TENSOR_NAME = 'ImageTensor:0'
     OUTPUT_TENSOR_NAME = 'SemanticPredictions:0'
@@ -48,7 +47,8 @@ class DeepLabModel(object):
         self.sess = tf.Session(graph=self.graph)
 
     def run(self, image):
-        """Runs inference on a single image.
+        """
+        Runs inference on a single image.
 
         Args:
           image: A PIL.Image object, raw input image.
@@ -68,43 +68,9 @@ class DeepLabModel(object):
         return resized_image, seg_map
 
 
-# def std_size_by_face(img: Image, size=(295, 413), ratio=1.3):
-#     """ 根据人脸定位，裁剪为标准尺寸
-#
-#     Returns:
-#         当图像中仅有1张人脸时，放回PIL.Image对象，当无人脸或者多张人脸时，返回None
-#     """
-#
-#     rgb_img = img.convert('RGB')
-#     img_data = np.array(rgb_img)
-#     dets = face_locations(img_data, 1, model='cnn')
-#
-#     logging.info("图像中有{}张人脸".format(len(dets)))
-#     if len(dets) != 1:
-#         return None
-#
-#     detected_face = dets[0]
-#     left = detected_face[3]
-#     right = detected_face[1]
-#
-#     top = detected_face[0]
-#     bottom = detected_face[2]
-#
-#     cx = (left + right) // 2
-#     cy = (top + bottom) // 2
-#
-#     w = right - left
-#     h = size[1] * w // size[0]
-#
-#     box = (cx - w * ratio, cy - h * ratio, cx + w * ratio, cy + h * ratio)
-#     cropped_img = img.crop(box)
-#     resized_img = cropped_img.resize(size, Image.ANTIALIAS)
-#
-#     return resized_img
-
 def std_size_by_face(raw_img, rate=1.3, crop_size=(295, 413)):
-    """ 根据人脸定位，裁剪为标准尺寸
-
+    """
+    根据人脸定位，裁剪为标准尺寸
     """
     # 人脸识别
     result = face_landmark.keypoint_detection(images=[np.array(raw_img)])
@@ -197,9 +163,5 @@ if __name__ == '__main__':
     out_path = './out_photo2/'
     file_name = 'xinxi.jpeg'
     image = Image.open(in_path + file_name)
-    # img1 = std_size_by_face(image)
-    # if not img1:
-    #     exit(0)
-    # img2 = std_bg_by_person(img1, model)
     img2 = std_photo(image, std_size=None, bg='blue')
     img2.save(out_path + file_name)

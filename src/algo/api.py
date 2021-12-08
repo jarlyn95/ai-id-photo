@@ -11,20 +11,11 @@ from config import get_config
 from rclient import rc
 
 from precision_id_photo import std_photo
-import os
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 app = Flask(__name__, static_folder="./html/static", template_folder="./html")
 CORS(app)
-
-# # 跨域支持
-# def after_request(resp):
-#     resp.headers['Access-Control-Allow-Origin'] = '*'
-#     return resp
-#
-#
-# app.after_request(after_request)
 
 
 cfg = get_config()
@@ -36,38 +27,28 @@ mini_heigth = 413
 std_size = [(295, 413), (389, 566), (413, 531), (413, 579), (413, 626)]
 
 
-# @app.route('/upload_image', methods=['POST'])
-# def upload_image():
-#     img_base64 = request.json.get("img_base64")
-#     img_id = hashlib.md5(img_base64.encode(encoding='UTF-8')).hexdigest()
-#     cache.setex(img_id, 8 * 60 * 60, img_base64)
-#     return {'code': 0, 'msg': '成功', 'img_id': img_id}
-
 @app.route("/")
 @cross_origin()
 def home():
-    '''
+    """
         当在浏览器访问网址时，通过 render_template 方法渲染 dist 文件夹中的 index.html。
         页面之间的跳转交给前端路由负责，后端不用再写大量的路由
-    '''
+    """
     return render_template('index.html')
+
 
 @app.route("/health")
 @cross_origin()
 def health():
-    '''
+    """
         健康状态检测
-    '''
+    """
     return jsonify({'code': 0, 'msg': 'ok'})
 
 
 @app.route('/upload_image', methods=['GET', 'POST', 'OPTIONS'])
 @cross_origin()
 def upload_image():
-    # img_base64 = request.json.get("img_base64")
-    # img_id = hashlib.md5(img_base64.encode(encoding='UTF-8')).hexdigest()
-    # cache.setex(img_id, 8 * 60 * 60, img_base64)
-    # return {'code': 0, 'msg': '成功', 'img_id': img_id}
     if request.method == 'POST':
         img = request.files['file']
         img_base64 = base64.b64encode(img.read())

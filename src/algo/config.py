@@ -1,6 +1,7 @@
 import yaml
 import os
 
+
 def get_config():
     pth = os.path.abspath(os.path.dirname(__file__) + '/setting.yaml')
     f = open(pth, encoding='utf-8')
