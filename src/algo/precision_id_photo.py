@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
+
+import matplotlib.pyplot
 import numpy as np
 from PIL import Image
 
@@ -106,7 +108,8 @@ def create_mask(label):
         A Colormap for visualizing segmentation results.
     """
     colormap = np.zeros((256, 3), dtype=int)
-    colormap[15, :] = [192, 128, 128]
+    # colormap[15, :] = [192, 128, 128]
+    colormap[15, :] = [255, 255, 255]
 
     return colormap[label]
 
@@ -138,6 +141,46 @@ def std_bg_by_person(img: Image, model: DeepLabModel, rgb=[255, 0, 0]):
     return std_new_img
 
 
+# def std_bg_by_person(img: Image, model: DeepLabModel, rgb=[255, 0, 0]):
+#     """根据人物分割修改背景
+#
+#     """
+#     std_size = img.size
+#     resized_image, seg_map = model.run(img)  # resized_image 某个方向的像素点为513
+#
+#     mask = create_mask(seg_map).astype(np.uint8)[:, :, 0]
+#     mask = cv.dilate(mask, None, iterations=1)
+#     # img = np.asarray(resized_image).transpose((2, 0, 1))
+#     # img = img.copy()
+#     #
+#     # person = []
+#     # mask = np.array((mask < 180), dtype=np.uint8)
+#     # mask = cv.dilate(mask, None, iterations=2)
+#     # mask = np.array(mask, dtype=np.bool)
+#     # for i in range(3):
+#     #     a = img[i]
+#     #     a[mask] = rgb[i]
+#     #     person.append(a)
+#     #
+#     # img = np.array(person).transpose((1, 2, 0))
+#     # new_image = Image.fromarray(img)
+#     # mask = mask / 255.0
+#     mask = np.repeat(np.asarray(mask)[:, :, None], 3, axis=2) / 255.0
+#     # tmp = Image.fromarray(mask)
+#     # matplotlib.pyplot.plot(tmp)
+#     img = np.asarray(resized_image)
+#     from utils import create_rgb_bg
+#     bg = create_rgb_bg((img.shape[0], img.shape[1], 3), rgb)
+#     print(mask.shape)
+#     print(img.shape)
+#     img = mask * img + (1 - mask) * bg
+#     img = img.astype(np.uint8)
+#     new_image = Image.fromarray(img)
+#     std_new_img = new_image.resize(std_size, Image.ANTIALIAS)
+#
+#     return std_new_img
+
+
 def std_photo(img, rate=1.3, std_size=(295, 413), thresh=2, bg='white'):
     rgb = [255, 255, 255]
     if bg == 'red':
@@ -155,13 +198,13 @@ def std_photo(img, rate=1.3, std_size=(295, 413), thresh=2, bg='white'):
         return img2
 
 
-model_path = "./pretrained_model/deeplabv3_pascal_train_aug_2018_01_04.tar.gz"
+model_path = "./pretrained_model/deeplabv3_pascal_trainval_2018_01_04.tar.gz"
 model = DeepLabModel(model_path)
 
 if __name__ == '__main__':
     in_path = './in_photo/'
     out_path = './out_photo2/'
-    file_name = 'xinxi.jpeg'
+    file_name = 'img_2.png'
     image = Image.open(in_path + file_name)
-    img2 = std_photo(image, std_size=None, bg='blue')
-    img2.save(out_path + file_name)
+    img = std_photo(image, rate=1.3, thresh=10, std_size=(413, 579), bg='blue')
+    img.save(out_path + file_name)
