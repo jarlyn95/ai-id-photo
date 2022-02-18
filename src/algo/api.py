@@ -14,7 +14,7 @@ from precision_id_photo import std_photo
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-app = Flask(__name__, static_folder="./html/static", template_folder="./html")
+app = Flask(__name__, static_folder="../../docs/static", template_folder="../../docs")
 CORS(app)
 
 

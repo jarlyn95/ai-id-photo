@@ -2,9 +2,21 @@
 
 ## Build Setup
 
+选择 Node 版本
+```
+nvm use v14.18.1
+```
+
 进入项目目录
 ```
 cd src/web
+```
+
+清理node
+```
+npm cache clean --force
+rm -rf node_modules
+rm -rf package-lock.json
 ```
 
 安装依赖
