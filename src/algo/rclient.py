@@ -3,7 +3,9 @@ from config import get_config
 
 
 def rc(cfg):
-    conn_pool = redis.ConnectionPool(host=cfg['redis']['host'], port=cfg['redis']['port'])
+    conn_pool = redis.ConnectionPool(host=cfg['redis']['host'],
+                                     port=cfg['redis']['port'],
+                                     password=cfg['redis']['password'])
     r = redis.Redis(connection_pool=conn_pool)
     return r
 

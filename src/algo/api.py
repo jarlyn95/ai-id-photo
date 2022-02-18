@@ -19,6 +19,7 @@ CORS(app)
 
 
 cfg = get_config()
+logging.info(cfg)
 cache = rc(cfg)
 
 mini_width = 295

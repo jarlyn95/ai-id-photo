@@ -1,11 +1,13 @@
-active: dev
+active: prod
 env_list: 
 - env: dev
   redis:
        host: localhost
        port: 6379
+       passwor:
 - env: test
 - env: prod
   redis:
     host: 172.17.0.13
     port: 6379
+    password:
